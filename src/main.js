@@ -13,8 +13,14 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 // 第三方库挂载导全局
-import echarts from '@/plugins/echarts'
+import echarts from '@/plugins/echarts';
 app.provide('echarts' , echarts)
+
+// 挂载全局分页本地化
+import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/dist/locale/zh-cn'
+app.use(ElementPlus, {locale: zhCn,})
+import 'dayjs/locale/zh-cn'
 
 
 app.use(router).mount('#app')

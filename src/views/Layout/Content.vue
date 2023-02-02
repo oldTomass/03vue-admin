@@ -2,7 +2,7 @@
     <div class="header">
         <!-- Content-Header-Icon：控制Menu-折叠、展开-->
         <div class="icon">
-            <el-icon v-if="isClose" @click="change">
+            <el-icon v-if="props.isClose" @click="change">
                 <Expand />
             </el-icon>
             <el-icon v-else @click="change">
@@ -19,49 +19,40 @@
             </div>
         </div>
     </div>
+
     <div class="wrapper">
         <router-view></router-view>
     </div>
 
 </template>
-<script>
-import { ref, onMounted } from 'vue'
-import dayjs from 'dayjs'
-import { useRouter } from 'vue-router'
+<script setup>
+import { ref, onMounted } from 'vue';
+import dayjs from 'dayjs';
+import { useRouter } from 'vue-router';
 
-export default {
 
-    props: ['isClose'],
-    emit: ['change'],
-    setup(props, { emit }) {
+const props = defineProps(['isClose']);
+const emit = defineEmits(['change']);
 
-        let time = ref(null)
-        const router = useRouter()
+let time = ref(null);
+const router = useRouter();
 
-        // 点击icon切换Menu折叠或展开
-        // props 只读不能修改，子组件通知父组件修改,在父组件中接收当前传递过去的change事件，通过定义change事件修改
-        const change = () => {
-            emit('change')
-        }
+// 点击icon切换Menu折叠或展开
+// props 只读不能修改，子组件通知父组件修改,在父组件中接收当前传递过去的change事件，通过定义change事件修改
+const change = () => {
+    emit('change')
+};
 
-        // 生命周期函数，自动读取系统时间
-        onMounted(() => {
-            time.value = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')
-        })
+// 生命周期函数，自动读取系统时间
+onMounted(() => {
+    time.value = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')
+});
 
-        // 推出登录---跳转login页面
-        const out = () => {
-            router.push('/login')
-        }
-        return {
-            change,
-            time,
-            out
-        }
-
-    }
-
+// 推出登录---跳转login页面
+const out = () => {
+    router.push('/login')
 }
+
 </script>
 <style lang="less" scoped>
 .header {

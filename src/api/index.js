@@ -11,10 +11,17 @@ const api = {
         return axios.get(base.home)
     },
     /**
-     * 查询errors
+     * 查询errors/uid
      */
-    getErrors(){
-        return axios.get(base.errors)
+    getErrors(params){
+        return axios.get(base.errors,{params})
+    },
+    /**
+     * 查询第一页的句子/sentence/{contentType}/{contentLevel}/{page}
+     */
+    getSentenceByPage(contentType , contentLevel , page){
+      
+        return axios.get(base.sentences+'/'+contentType+'/'+contentLevel+'/'+page)
     }
    
 
